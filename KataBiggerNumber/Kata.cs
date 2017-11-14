@@ -11,7 +11,7 @@ namespace KataBiggerNumber
                 return -1;
             }
 
-            throw new System.NotImplementedException();
+            throw new System.NotSupportedException();
         }
 
         private static bool NoMoreBiggerNumber(int input)
