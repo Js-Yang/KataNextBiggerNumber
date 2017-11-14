@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KataBiggerNumber
+namespace KataTest
 {
     public class Class1
     {
