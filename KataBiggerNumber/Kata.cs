@@ -1,10 +1,12 @@
-﻿namespace KataBiggerNumber
+﻿using System.Linq;
+
+namespace KataBiggerNumber
 {
     public class Kata
     {
         public static double NextBiggerNumber(int input)
         {
-            if (input < 10 || (input / 10 % 10) == (input / 1 % 10))
+            if (input.ToString().Distinct().Count() == 1)
             {
                 return -1;
             }
