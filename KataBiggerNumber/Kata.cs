@@ -6,12 +6,17 @@ namespace KataBiggerNumber
     {
         public static double NextBiggerNumber(int input)
         {
-            if (input.ToString().Distinct().Count() == 1)
+            if (NoMoreBiggerNumber(input))
             {
                 return -1;
             }
 
             throw new System.NotImplementedException();
+        }
+
+        private static bool NoMoreBiggerNumber(int input)
+        {
+            return input.ToString().Distinct().Count() == 1;
         }
     }
 }
