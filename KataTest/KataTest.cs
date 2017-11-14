@@ -17,9 +17,9 @@ namespace KataBiggerNumberTests
         }
 
         [Test]
-        public void NextBiggerNumber_When_Input_Is_111_Then_return_Minus1()
+        public void NextBiggerNumber_When_Input_Is_11_Then_return_Minus1()
         {
-            var input = 111;
+            var input = 11;
 
             var result = Kata.NextBiggerNumber(input);
 
