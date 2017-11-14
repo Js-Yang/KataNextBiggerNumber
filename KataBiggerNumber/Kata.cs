@@ -5,19 +5,19 @@ namespace KataBiggerNumber
 {
     public class Kata
     {
-        public static double NextBiggerNumber(int inputNumber)
+        public static double NextBiggerNumber(int number)
         {
-            if (NoMoreBiggerNumber(inputNumber))
+            if (IsBiggestNumberSameWith(number.ToString()))
             {
                 return -1;
             }
 
-            throw new System.NotSupportedException();
+            throw new NotSupportedException();
         }
 
-        private static bool NoMoreBiggerNumber(int number)
+        private static bool IsBiggestNumberSameWith(string input)
         {
-            return number.ToString().Distinct().Count() == 1 || string.Concat(number.ToString().OrderByDescending(c => c)) == number.ToString();
+            return input.Distinct().Count() == 1 || string.Concat(input.OrderByDescending(charactor => charactor)) == input;
         }
     }
 }
