@@ -1,12 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace KataBiggerNumber
 {
     public class Kata
     {
-        public static double NextBiggerNumber(int input)
+        public static double NextBiggerNumber(int inputNumber)
         {
-            if (NoMoreBiggerNumber(input))
+            if (NoMoreBiggerNumber(inputNumber))
             {
                 return -1;
             }
@@ -14,9 +15,9 @@ namespace KataBiggerNumber
             throw new System.NotSupportedException();
         }
 
-        private static bool NoMoreBiggerNumber(int input)
+        private static bool NoMoreBiggerNumber(int number)
         {
-            return input.ToString().Distinct().Count() == 1;
+            return number.ToString().Distinct().Count() == 1 || string.Concat(number.ToString().OrderByDescending(c => c)) == number.ToString();
         }
     }
 }
