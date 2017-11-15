@@ -12,11 +12,13 @@ namespace KataBiggerNumber
                 return -1;
             }
 
-            var smallestNumber = string.Concat(input.ToString().OrderBy(charactor => charactor));
+            var smallestCombination = GetSmallestCombinationOf(input);
+            return Convert.ToInt64(string.Concat(smallestCombination.Substring(1, smallestCombination.Length - 1), smallestCombination.First()));
+        }
 
-            var biggestNumber = smallestNumber[0];
-
-            return Convert.ToInt64(string.Concat(smallestNumber.Substring(1, smallestNumber.Length - 1), biggestNumber));
+        private static string GetSmallestCombinationOf(long input)
+        {
+            return string.Concat(input.ToString().OrderBy(charactor => charactor));
         }
 
         private static bool NoMoreBiggerNumber(string input)
