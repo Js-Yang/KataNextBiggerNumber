@@ -5,14 +5,18 @@ namespace KataBiggerNumber
 {
     public class Kata
     {
-        public static double NextBiggerNumber(int number)
+        public static long NextBiggerNumber(long input)
         {
-            if (NoMoreBiggerNumber(number.ToString()))
+            if (NoMoreBiggerNumber(input.ToString()))
             {
                 return -1;
             }
 
-            throw new NotSupportedException();
+            var smallestNumber = string.Concat(input.ToString().OrderBy(charactor => charactor));
+
+            var biggestNumber = smallestNumber[0];
+
+            return Convert.ToInt64(string.Concat(smallestNumber.Substring(1, smallestNumber.Length - 1), biggestNumber));
         }
 
         private static bool NoMoreBiggerNumber(string input)
