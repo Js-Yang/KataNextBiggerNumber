@@ -9,6 +9,7 @@ namespace KataBiggerNumberTests
         [TestCase(11, -1, TestName = "NextBiggerNumber When Input Is 11 Then return -1")]
         [TestCase(21, -1, TestName = "NextBiggerNumber When Input Is 21 Then return -1")]
         [TestCase(12, 21, TestName = "NextBiggerNumber When Input Is 12 Then return 21")]
+        [TestCase(513, 531, TestName = "NextBiggerNumber When Input Is 513 Then return 531")]
         public void NextBiggerNumber_Test(long input, long expected)
         {
             var result = Kata.NextBiggerNumber(input);
