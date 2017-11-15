@@ -7,7 +7,7 @@ namespace KataBiggerNumber
     {
         public static double NextBiggerNumber(int number)
         {
-            if (IsBiggestNumberSameWith(number.ToString()))
+            if (NoMoreBiggerNumber(number.ToString()))
             {
                 return -1;
             }
@@ -15,7 +15,7 @@ namespace KataBiggerNumber
             throw new NotSupportedException();
         }
 
-        private static bool IsBiggestNumberSameWith(string input)
+        private static bool NoMoreBiggerNumber(string input)
         {
             return input.Distinct().Count() == 1 || string.Concat(input.OrderByDescending(charactor => charactor)) == input;
         }
