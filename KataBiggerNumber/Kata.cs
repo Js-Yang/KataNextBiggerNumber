@@ -23,13 +23,16 @@ public class Kata
     private static long GetNextBiggerNumberBy(long input)
     {
         var numbers = input.ToString().ToArray();
-
+        
         for (var index = numbers.Length - 1; index > 0; index--)
         {
             var nextIndex = index - 1;
             if (numbers[index] > numbers[nextIndex])
             {
                 Swap(numbers, index, nextIndex);
+                var subNumbers = numbers.Skip(index).Take(numbers.Length - index).OrderBy(x => x).ToArray();
+                Array.Copy(subNumbers, 0, numbers, index, subNumbers.Length);
+
                 break;
             }
         }
