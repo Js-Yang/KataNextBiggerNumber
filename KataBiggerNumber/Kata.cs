@@ -8,7 +8,7 @@ namespace KataBiggerNumber
     {
         public static long NextBiggerNumber(long input)
         {
-            if (NoMoreBiggerNumber(input.ToString()))
+            if (NoMoreBiggerNumber(input))
             {
                 return -1;
             }
@@ -16,28 +16,34 @@ namespace KataBiggerNumber
             return GetNextBiggerNumberBy(input);
         }
 
-        private static bool NoMoreBiggerNumber(string input)
+        private static bool NoMoreBiggerNumber(long input)
         {
-            return input.Distinct().Count() == 1 || string.Concat(input.OrderByDescending(charactor => charactor)) == input;
+            var numbers = input.ToString();
+            return numbers.Distinct().Count() == 1 || string.Concat(numbers.OrderByDescending(charactor => charactor)) == numbers;
         }
 
         private static long GetNextBiggerNumberBy(long input)
         {
-            var reverseNumber = input.ToString().Select(s => int.Parse(s.ToString())).Reverse().ToList();
-
-            for (var i = 0; i < reverseNumber.Count; i++)
+            var numbers = input.ToString().ToArray();
+            
+            for (var index = numbers.Length - 1; index > 0; index--)
             {
-                var next = reverseNumber[i + 1];
-                if (reverseNumber[i].CompareTo(next) == next)
+                var nextIndex = index - 1;
+                if (numbers[index] > numbers[nextIndex])
                 {
-                    var temp = reverseNumber[i];
-                    reverseNumber[i] = next;
-                    reverseNumber[i + 1] = temp;
+                    Swap(numbers, index, nextIndex);
                     break;
                 }
             }
 
-            return Convert.ToInt64(string.Concat(reverseNumber.ToArray().Reverse().ToArray()));
+            return Convert.ToInt64(string.Concat(numbers.ToArray()));
+        }
+
+        private static void Swap(IList<char> numbers, int i, int nextIndex)
+        {
+            var temp = numbers[i];
+            numbers[i] = numbers[nextIndex];
+            numbers[nextIndex] = temp;
         }
     }
 }
