@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KataBiggerNumber
@@ -12,7 +13,17 @@ namespace KataBiggerNumber
                 return -1;
             }
 
-            var reverseNumber = input.ToString().Select(x => x - 48).ToArray().Reverse().ToList();
+            return GetNextBiggerNumberBy(input);
+        }
+
+        private static bool NoMoreBiggerNumber(string input)
+        {
+            return input.Distinct().Count() == 1 || string.Concat(input.OrderByDescending(charactor => charactor)) == input;
+        }
+
+        private static long GetNextBiggerNumberBy(long input)
+        {
+            var reverseNumber = input.ToString().Select(s => int.Parse(s.ToString())).ToArray().Reverse().ToList();
 
             for (var i = 0; i < reverseNumber.Count; i++)
             {
@@ -26,17 +37,7 @@ namespace KataBiggerNumber
                 }
             }
 
-            return Convert.ToInt64(string.Concat(reverseNumber.ToArray().Reverse()));
-        }
-
-        private static string GetSmallestCombinationOf(long input)
-        {
-            return string.Concat(input.ToString().OrderBy(charactor => charactor));
-        }
-
-        private static bool NoMoreBiggerNumber(string input)
-        {
-            return input.Distinct().Count() == 1 || string.Concat(input.OrderByDescending(charactor => charactor)) == input;
+            return Convert.ToInt64(string.Concat(reverseNumber.ToArray().Reverse().ToArray()));
         }
     }
 }
