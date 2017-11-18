@@ -23,7 +23,7 @@ namespace KataBiggerNumber
 
         private static long GetNextBiggerNumberBy(long input)
         {
-            var reverseNumber = input.ToString().Select(s => int.Parse(s.ToString())).ToArray().Reverse().ToList();
+            var reverseNumber = input.ToString().Select(s => int.Parse(s.ToString())).Reverse().ToList();
 
             for (var i = 0; i < reverseNumber.Count; i++)
             {
