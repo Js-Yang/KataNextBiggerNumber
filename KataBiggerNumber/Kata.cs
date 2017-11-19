@@ -24,19 +24,28 @@ public class Kata
     {
         var numbers = input.ToString().ToArray();
 
-        for (var splitPosition = numbers.Length - 1; splitPosition > 0; splitPosition--)
+        var candidatePosition = GetCandidatePosition(numbers);
+
+        var splitPosition = candidatePosition + 1;
+        var partialNumbers = GetParialNumbersFrom(splitPosition, numbers).OrderBy(num => num).ToList();
+        partialNumbers.CopyTo(numbers, splitPosition);
+        Swap(numbers, candidatePosition, splitPosition + partialNumbers.FindIndex(number => number > numbers[candidatePosition]));
+
+        return Convert.ToInt64(string.Concat(numbers.ToArray()));
+    }
+
+    private static int GetCandidatePosition(char[] numbers)
+    {
+        var candidatePosition = 0;
+        for (var index = numbers.Length - 1; index > 0; index--)
         {
-            var candidatePosition = splitPosition - 1;
-            if (numbers[splitPosition] > numbers[candidatePosition])
+            candidatePosition = index - 1;
+            if (numbers[index] > numbers[candidatePosition])
             {
-                var partialNumbers = GetParialNumbersFrom(splitPosition, numbers).OrderBy(num => num).ToList();
-                partialNumbers.CopyTo(numbers, splitPosition);
-                Swap(numbers, candidatePosition, splitPosition + partialNumbers.FindIndex(number => number > numbers[candidatePosition]));
                 break;
             }
         }
-
-        return Convert.ToInt64(string.Concat(numbers.ToArray()));
+        return candidatePosition;
     }
 
     private static IEnumerable<char> GetParialNumbersFrom(int index, char[] numbers)
