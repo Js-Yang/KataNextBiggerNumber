@@ -10,9 +10,7 @@ public class Kata
         {
             return -1;
         }
-
-        Console.WriteLine(input);
-
+        
         return GetNextBiggerNumberBy(input);
     }
 
@@ -31,7 +29,9 @@ public class Kata
             var priviousPosition = currentPosition - 1;
             if (numbers[currentPosition] > numbers[priviousPosition])
             {
-                Swap(numbers, priviousPosition, NextBiggerNumberIndexOf(currentPosition, numbers));
+                var partialNumbers = ParialOrderBy(numbers, currentPosition);
+                partialNumbers.CopyTo(numbers, currentPosition);
+                Swap(numbers, priviousPosition, partialNumbers.FindIndex(x => x > numbers[priviousPosition]) + currentPosition);
                 break;
             }
         }
@@ -39,11 +39,9 @@ public class Kata
         return Convert.ToInt64(string.Concat(numbers.ToArray()));
     }
 
-    private static int NextBiggerNumberIndexOf(int current, char[] numbers)
+    private static List<char> ParialOrderBy(char[] numbers, int currentPosition)
     {
-        var partialNumbers = numbers.Skip(current).Take(numbers.Length - current).OrderBy(x => x).ToList();
-        partialNumbers.CopyTo(numbers, current);
-        return partialNumbers.FindIndex(x => x > numbers[current - 1]) + current;
+        return numbers.Skip(currentPosition).Take(numbers.Length - currentPosition).OrderBy(x => x).ToList();
     }
 
     private static void Swap(IList<char> numbers, int i, int nextIndex)
