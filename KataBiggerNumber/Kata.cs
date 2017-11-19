@@ -26,12 +26,12 @@ public class Kata
     {
         var numbers = input.ToString().ToArray();
 
-        for (var current = numbers.Length - 1; current > 0; current--)
+        for (var currentPosition = numbers.Length - 1; currentPosition > 0; currentPosition--)
         {
-            var priviousOfCurrent = current - 1;
-            if (numbers[current] > numbers[priviousOfCurrent])
+            var priviousPosition = currentPosition - 1;
+            if (numbers[currentPosition] > numbers[priviousPosition])
             {
-                Swap(numbers, priviousOfCurrent, IndexOfNextNumber(numbers, current));
+                Swap(numbers, priviousPosition, NextBiggerNumberIndexOf(currentPosition, numbers));
                 break;
             }
         }
@@ -39,11 +39,11 @@ public class Kata
         return Convert.ToInt64(string.Concat(numbers.ToArray()));
     }
 
-    private static int IndexOfNextNumber(char[] numbers, int current)
+    private static int NextBiggerNumberIndexOf(int current, char[] numbers)
     {
-        var subNumbers = numbers.Skip(current).Take(numbers.Length - current).OrderBy(x => x).ToList();
-        subNumbers.CopyTo(numbers, current);
-        return subNumbers.FindIndex(x => x > numbers[current - 1]) + current;
+        var partialNumbers = numbers.Skip(current).Take(numbers.Length - current).OrderBy(x => x).ToList();
+        partialNumbers.CopyTo(numbers, current);
+        return partialNumbers.FindIndex(x => x > numbers[current - 1]) + current;
     }
 
     private static void Swap(IList<char> numbers, int i, int nextIndex)
