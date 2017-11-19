@@ -13,12 +13,22 @@ public class Kata
 
         var numbers = input.ToString().ToArray();
         var splitPosition = GetSplitPositionBy(numbers);
-        var partialPosition = splitPosition + 1;
-        var partialNumbers = GetParialNumbersFrom(partialPosition, numbers).OrderBy(num => num).ToList();
-        partialNumbers.CopyTo(numbers, partialPosition);
-        Swap(numbers, splitPosition, partialPosition + partialNumbers.FindIndex(number => number > numbers[splitPosition]));
+        SortNumberFrom(splitPosition, numbers);
+        Swap(splitPosition, FindBiggerNumberFrom(splitPosition, numbers), numbers);
 
         return Convert.ToInt64(string.Concat(numbers.ToArray()));
+    }
+
+    private static void SortNumberFrom(int splitNumber, char[] numbers)
+    {
+        var partialNumber = splitNumber + 1;
+        GetParialNumbersFrom(partialNumber, numbers).OrderBy(num => num).ToList().CopyTo(numbers, partialNumber);
+    }
+
+    private static int FindBiggerNumberFrom(int current, char[] numbers)
+    {
+        var firstPartialIndex = current + 1;
+        return numbers.ToList().FindIndex(firstPartialIndex, number => number > numbers[current]);
     }
 
     private static bool NoMoreBiggerNumber(long input)
@@ -46,7 +56,7 @@ public class Kata
         return numbers.Skip(index).Take(numbers.Length - index);
     }
 
-    private static void Swap(IList<char> numbers, int index, int nextIndex)
+    private static void Swap(int index, int nextIndex, IList<char> numbers)
     {
         var temp = numbers[index];
         numbers[index] = numbers[nextIndex];
