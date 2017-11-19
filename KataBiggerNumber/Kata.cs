@@ -11,6 +11,8 @@ public class Kata
             return -1;
         }
 
+        Console.WriteLine(input);
+
         return GetNextBiggerNumberBy(input);
     }
 
@@ -29,10 +31,16 @@ public class Kata
             var nextIndex = index - 1;
             if (numbers[index] > numbers[nextIndex])
             {
-                Swap(numbers, index, nextIndex);
                 var subNumbers = numbers.Skip(index).Take(numbers.Length - index).OrderBy(x => x).ToArray();
                 Array.Copy(subNumbers, 0, numbers, index, subNumbers.Length);
-
+                for (int i = 0; i < subNumbers.Length; i++)
+                {
+                    if (numbers[nextIndex] < subNumbers[i])
+                    {
+                        Swap(numbers, nextIndex, i + index);
+                        break;
+                    }
+                }
                 break;
             }
         }
