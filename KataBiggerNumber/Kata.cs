@@ -13,10 +13,10 @@ public class Kata
 
         var numbers = input.ToString().ToArray();
         var splitPosition = GetSplitPositionBy(numbers);
-        var firstPartialIndex = splitPosition + 1;
-        var partialNumbers = GetParialNumbersFrom(firstPartialIndex, numbers).OrderBy(num => num).ToList();
-        partialNumbers.CopyTo(numbers, firstPartialIndex);
-        Swap(numbers, splitPosition, firstPartialIndex + partialNumbers.FindIndex(number => number > numbers[splitPosition]));
+        var partialPosition = splitPosition + 1;
+        var partialNumbers = GetParialNumbersFrom(partialPosition, numbers).OrderBy(num => num).ToList();
+        partialNumbers.CopyTo(numbers, partialPosition);
+        Swap(numbers, splitPosition, partialPosition + partialNumbers.FindIndex(number => number > numbers[splitPosition]));
 
         return Convert.ToInt64(string.Concat(numbers.ToArray()));
     }
