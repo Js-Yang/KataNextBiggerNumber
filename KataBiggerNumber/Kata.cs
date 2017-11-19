@@ -26,12 +26,12 @@ public class Kata
 
         for (var currentPosition = numbers.Length - 1; currentPosition > 0; currentPosition--)
         {
-            var priviousPosition = currentPosition - 1;
-            if (numbers[currentPosition] > numbers[priviousPosition])
+            var splitPosition = currentPosition - 1;
+            if (numbers[currentPosition] > numbers[splitPosition])
             {
-                var partialNumbers = ParialOrderBy(numbers, currentPosition);
+                var partialNumbers = GetParialNumbersFrom(currentPosition, numbers).OrderBy(num => num).ToList();
                 partialNumbers.CopyTo(numbers, currentPosition);
-                Swap(numbers, priviousPosition, partialNumbers.FindIndex(x => x > numbers[priviousPosition]) + currentPosition);
+                Swap(numbers, splitPosition, currentPosition + partialNumbers.FindIndex(x => x > numbers[splitPosition]));
                 break;
             }
         }
@@ -39,15 +39,15 @@ public class Kata
         return Convert.ToInt64(string.Concat(numbers.ToArray()));
     }
 
-    private static List<char> ParialOrderBy(char[] numbers, int currentPosition)
+    private static IEnumerable<char> GetParialNumbersFrom(int index, char[] numbers)
     {
-        return numbers.Skip(currentPosition).Take(numbers.Length - currentPosition).OrderBy(x => x).ToList();
+        return numbers.Skip(index).Take(numbers.Length - index);
     }
 
-    private static void Swap(IList<char> numbers, int i, int nextIndex)
+    private static void Swap(IList<char> numbers, int index, int nextIndex)
     {
-        var temp = numbers[i];
-        numbers[i] = numbers[nextIndex];
+        var temp = numbers[index];
+        numbers[index] = numbers[nextIndex];
         numbers[nextIndex] = temp;
     }
 }
