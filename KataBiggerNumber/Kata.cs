@@ -24,14 +24,14 @@ public class Kata
     {
         var numbers = input.ToString().ToArray();
 
-        for (var currentPosition = numbers.Length - 1; currentPosition > 0; currentPosition--)
+        for (var splitPosition = numbers.Length - 1; splitPosition > 0; splitPosition--)
         {
-            var splitPosition = currentPosition - 1;
-            if (numbers[currentPosition] > numbers[splitPosition])
+            var candidatePosition = splitPosition - 1;
+            if (numbers[splitPosition] > numbers[candidatePosition])
             {
-                var partialNumbers = GetParialNumbersFrom(currentPosition, numbers).OrderBy(num => num).ToList();
-                partialNumbers.CopyTo(numbers, currentPosition);
-                Swap(numbers, splitPosition, currentPosition + partialNumbers.FindIndex(x => x > numbers[splitPosition]));
+                var partialNumbers = GetParialNumbersFrom(splitPosition, numbers).OrderBy(num => num).ToList();
+                partialNumbers.CopyTo(numbers, splitPosition);
+                Swap(numbers, candidatePosition, splitPosition + partialNumbers.FindIndex(number => number > numbers[candidatePosition]));
                 break;
             }
         }
