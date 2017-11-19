@@ -10,8 +10,15 @@ public class Kata
         {
             return -1;
         }
-        
-        return GetNextBiggerNumberBy(input);
+
+        var numbers = input.ToString().ToArray();
+        var splitPosition = GetSplitPositionBy(numbers);
+        var partialNumbers = GetParialNumbersFrom(splitPosition + 1, numbers).OrderBy(num => num).ToList();
+
+        partialNumbers.CopyTo(numbers, splitPosition + 1);
+        Swap(numbers, splitPosition, splitPosition + partialNumbers.FindIndex(number => number > numbers[splitPosition]) + 1);
+
+        return Convert.ToInt64(string.Concat(numbers.ToArray()));
     }
 
     private static bool NoMoreBiggerNumber(long input)
@@ -20,32 +27,18 @@ public class Kata
         return numbers.Distinct().Count() == 1 || string.Concat(numbers.OrderByDescending(charactor => charactor)) == numbers;
     }
 
-    private static long GetNextBiggerNumberBy(long input)
+    private static int GetSplitPositionBy(char[] numbers)
     {
-        var numbers = input.ToString().ToArray();
-
-        var candidatePosition = GetCandidatePosition(numbers);
-
-        var splitPosition = candidatePosition + 1;
-        var partialNumbers = GetParialNumbersFrom(splitPosition, numbers).OrderBy(num => num).ToList();
-        partialNumbers.CopyTo(numbers, splitPosition);
-        Swap(numbers, candidatePosition, splitPosition + partialNumbers.FindIndex(number => number > numbers[candidatePosition]));
-
-        return Convert.ToInt64(string.Concat(numbers.ToArray()));
-    }
-
-    private static int GetCandidatePosition(char[] numbers)
-    {
-        var candidatePosition = 0;
+        var splitPosition = 0;
         for (var index = numbers.Length - 1; index > 0; index--)
         {
-            candidatePosition = index - 1;
-            if (numbers[index] > numbers[candidatePosition])
+            splitPosition = index - 1;
+            if (numbers[index] > numbers[splitPosition])
             {
                 break;
             }
         }
-        return candidatePosition;
+        return splitPosition;
     }
 
     private static IEnumerable<char> GetParialNumbersFrom(int index, char[] numbers)
